@@ -1,8 +1,14 @@
 %html
   %head
-    %title Web
+    %title Book Table
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    %div
+      - if user_signed_in?
+        = "Hi, #{current_user.email}"
+        = button_to "Sign Out", destroy_user_session_path, method: :delete
+      - else
+        = link_to "Please Sign In", new_user_session_path
     = yield
