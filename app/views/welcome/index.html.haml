@@ -20,7 +20,56 @@
             = "Hi, #{current_user.email}"
             = button_to "Sign Out", destroy_user_session_path, method: :delete
           - else
-            = button_to "Please Sign In", new_user_session_path
-  
+            .row
+              .col-md-6.col-md-offset-3
+                %form{action: user_session_path, method: "POST"}
+                  .form-group
+                    %label{:for => "email"} Email address
+                    %input#email.form-control{:placeholder => "Email", :type => "email", name: "user[email]"}/
+                  .form-group
+                    %label{:for => "password"} Password
+                    %input#password.form-control{:placeholder => "Password", :type => "password", name: "user[password]"}/
+                  %button.btn.btn-default{:type => "submit"} Sign In
+                 
+                %p
+                  = link_to "Sign up", new_user_registration_path
+                %p
+                  = link_to "Forgot your password?", new_user_password_path
+        %div
+          %table.table.table-striped
+            %thead
+              %tr
+                %th
+                  Booking ID
+                %th
+                  Duration
+                %th
+                  Start At
+                %th
+                  End At
+                %th
+                  User ID
+                %th
+                %th
+                %th
 
-  
+            %tbody
+              - @bookings.each do |booking|
+                %tr
+                  %td= booking.id
+                  %td= "#{booking.duration} min"
+                  %td= booking.start_at.strftime("%d/%m/%Y %I:%M%p")
+                  %td= booking.end_at.strftime("%d/%m/%Y %I:%M%p")
+                  %td= booking.user_id
+                  %td= link_to 'Show', booking
+                  %td= link_to 'Edit', edit_booking_path(booking)
+                  %td= link_to 'Destroy', booking, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - if user_signed_in?
+            %form#new_booking
+              .form-group
+                %label{:for => "start_at"} Start At
+                %input#start_at.form-control{type: "datetime-local", name: "booking[start_at]"}/
+              .form-group
+                %label{:for => "end_at"} End At
+                %input#end_at.form-control{type: "datetime-local", name: "booking[end_at]"}/
+              %button.btn.btn-default{:type => "submit"} Create New Booking

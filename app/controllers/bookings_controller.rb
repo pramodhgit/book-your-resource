@@ -30,10 +30,10 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
       else
-        format.html { render :new }
+        format.html { render "welcome/index.html.haml" }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
