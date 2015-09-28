@@ -39,15 +39,16 @@ class BookingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /bookings/1
+  # htttp://localhost:3000/bokkings/1 <<-- xxxx_url
+  # PATCH/PUT /bookings/1 <<-- xxxx_path
   # PATCH/PUT /bookings/1.json
   def update
     respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Booking was successfully updated.' }
         format.json { render :show, status: :ok, location: @booking }
       else
-        format.html { render :edit }
+        format.html { redirect_to root_path, notice: "You got errors: #{@booking.errors}" }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +59,7 @@ class BookingsController < ApplicationController
   def destroy
     @booking.destroy
     respond_to do |format|
-      format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }
+      format.html { redirect_to root_url, notice: 'Booking was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

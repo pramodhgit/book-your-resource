@@ -39,4 +39,15 @@ $(document).ready(function() {
 			alert(err.end_at[0]);
 		})
 	});
+
+	$(".edit-btn").on("click", function(e) {
+		var bkId = $(e.target).data("id");
+		$("#edit-row-" + bkId).toggle();
+	});
+
+	$(".edit-row").hide();
+
 });
+
+	
+	

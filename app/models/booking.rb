@@ -12,7 +12,8 @@ class Booking < ActiveRecord::Base
 
 	def same_day_bookings
 		start_date = start_at.to_date
-		Booking.where('start_at >= ? AND start_at <= ?', start_date, start_date + 1)
+		Booking.where('start_at >= ? AND start_at <= ? AND id != ?',
+			start_date, start_date + 1, id)
 	end
 
     private

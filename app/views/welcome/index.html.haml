@@ -23,10 +23,10 @@
                 %form{action: user_session_path, method: "POST"}
                   .form-group
                     %label{:for => "email"} Email address
-                    %input#email.form-control{:placeholder => "Email", :type => "email", name: "user[email]"}/
+                    %input#email.form-control{:placeholder => "Email", :type => "email", name: "user[email]"}
                   .form-group
                     %label{:for => "password"} Password
-                    %input#password.form-control{:placeholder => "Password", :type => "password", name: "user[password]"}/
+                    %input#password.form-control{:placeholder => "Password", :type => "password", name: "user[password]"}
                   %button.btn.btn-default{:type => "submit"} Sign In
                  
                 %p
@@ -49,7 +49,6 @@
                   User ID
                 %th
                 %th
-                %th
 
             %tbody
               - @bookings.each do |booking|
@@ -59,15 +58,19 @@
                   %td= booking.start_at.strftime("%d/%m/%Y %I:%M%p")
                   %td= booking.end_at.strftime("%d/%m/%Y %I:%M%p")
                   %td= booking.user_id
-                  %td= link_to 'Show', booking
-                  %td= link_to 'Edit', edit_booking_path(booking)
-                  %td= link_to 'Destroy', booking, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  %td
+                    %button.btn.btn-default{class: "edit-btn", "data-id" => booking.id} Edit
+                  %td= link_to 'Delete', booking, :method => :delete, class: "btn btn-danger"
+                %tr.edit-row{id: "edit-row-#{booking.id}"}
+                  %td
+                    %div{class: "edit-form"}= render partial: "bookings/form", locals: {booking: booking}
+                
           - if user_signed_in?
             %form#new_booking
               .form-group
                 %label{:for => "start_at"} Start At
-                %input#start_at.form-control{type: "datetime-local", name: "booking[start_at]"}/
+                %input#start_at.form-control{type: "datetime-local", name: "booking[start_at]"}
               .form-group
                 %label{:for => "end_at"} End At
-                %input#end_at.form-control{type: "datetime-local", name: "booking[end_at]"}/
+                %input#end_at.form-control{type: "datetime-local", name: "booking[end_at]"}
               %button.btn.btn-default{:type => "submit"} Create New Booking

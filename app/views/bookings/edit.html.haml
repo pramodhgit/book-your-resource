@@ -1,6 +1,6 @@
 %h1 Editing booking
 
-= render 'form'
+= render 'form', locals: { booking: @booking }
 
 = link_to 'Show', @booking
 \|
